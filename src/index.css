@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+/* Chalk, graphite and verdigris: an architect's spec-sheet palette */
+:root {
+  --background: #f1f1ee;
+  --foreground: #16181a;
+  --card: #ffffff;
+  --card-foreground: #16181a;
+  --muted: #e2e3df;
+  --muted-foreground: #5d625f;
+  --border: #d3d5d0;
+  --primary: #16181a;
+  --primary-foreground: #f1f1ee;
+  --accent: #2c5c4c;
+  --accent-soft: #cfdcd4;
+  --accent-bright: #8fc1aa;
+  --secondary: #e2e3df;
+  --secondary-foreground: #16181a;
+  --destructive: #b42318;
+  --destructive-foreground: #ffffff;
+  --ring: #2c5c4c;
+  --graphite: #16181a;
+  --graphite-2: #202326;
+  --radius: 1.25rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-bright: var(--accent-bright);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-ring: var(--ring);
+  --color-graphite: var(--graphite);
+  --color-graphite-2: var(--graphite-2);
+  --font-display: "Bodoni Moda", "Didot", Georgia, serif;
+  --font-sans: "Schibsted Grotesk", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --radius-xl2: calc(var(--radius) + 0.5rem);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-marquee: marquee var(--duration, 40s) linear infinite;
+  --animate-marquee-reverse: marquee var(--duration, 40s) linear infinite reverse;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-50% - var(--gap, 1rem) / 2)); }
+  }
+}
+
+@layer base {
+  * { border-color: var(--border); }
+  html { -webkit-text-size-adjust: 100%; }
+  /* a notch smaller on larger screens: the whole rem scale follows */
+  @media (min-width: 768px) { html { font-size: 15px; } }
+  img { -webkit-user-drag: none; }
+  html.lenis, html.lenis body { height: auto; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  ::selection { background: var(--accent); color: var(--background); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+}
+
+@utility font-display-tight {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+}
+
+/* Small mono label used throughout like a drawing annotation */
+@utility label-mono {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Faint drafting grid behind sections */
+@utility bg-drafting {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--foreground) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--foreground) 6%, transparent) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
