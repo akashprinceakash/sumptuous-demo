@@ -15,6 +15,7 @@ import type { CarouselApi } from "@/components/ui/carousel";
 import {
   Stories, StoriesContent, Story, StoryAuthor, StoryAuthorImage, StoryAuthorName, StoryImage, StoryOverlay, StoryTitle,
 } from "@/components/ui/stories-carousel";
+import { cn } from "@/lib/utils";
 import { Container } from "@/components/site/primitives";
 import { StudioSection } from "@/components/site/studio-section";
 import { CtaBlock, PostCard, Presence, ProductTile, SectionHead } from "@/components/site/blocks";
@@ -48,6 +49,36 @@ const PARTNERS_TEXT = [
 
 // Live home page, "OUR FINEST PRODUCT · Timeless Georgian Windows For Modern Living"
 const GEORGIAN_TEXT = "Discover bespoke Georgian windows by Sumptuous Building Systems, crafted in premium Aluminium, Wood, and Steel. Combining classic architectural elegance with modern performance, our solutions are tailored to enhance every home and commercial space.";
+
+/**
+ * Testimonial card: the review is clamped to four lines with an ellipsis and a "Read More" toggle.
+ * The full text is always in the HTML (only CSS clamps it), so crawlers still read every word.
+ */
+function TestimonialCard({ t }: { t: (typeof testimonials)[number] }) {
+  const ref = React.useRef<HTMLQuoteElement>(null);
+  const [open, setOpen] = React.useState(false);
+  const [clamped, setClamped] = React.useState(true);
+  React.useEffect(() => {
+    const el = ref.current;
+    if (el) setClamped(el.scrollHeight > el.clientHeight + 1);
+  }, []);
+  return (
+    <figure className="w-[20rem] shrink-0 rounded-[var(--radius)] border bg-card p-6 md:w-[26rem]">
+      <Quote className="size-5 text-accent" />
+      <blockquote ref={ref} className={cn("mt-4 space-y-3 leading-snug md:text-lg", !open && "line-clamp-4")}>
+        {t.q.map((q) => <p key={q}>{q}</p>)}
+      </blockquote>
+      {clamped || open ? (
+        <button type="button" aria-expanded={open} onClick={() => setOpen((o) => !o)} className="label-mono mt-3 text-accent hover:underline">
+          {open ? "Read Less" : "Read More"}
+        </button>
+      ) : null}
+      <figcaption className="label-mono mt-6 text-muted-foreground">
+        <span className="text-foreground">{t.who}</span>{t.where ? <> · {t.where}</> : null}
+      </figcaption>
+    </figure>
+  );
+}
 
 export default function Home() {
   const heroRef = React.useRef<HTMLDivElement>(null);
@@ -252,19 +283,8 @@ export default function Home() {
         </Container>
         <div className="space-y-3 [mask-image:linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)]">
           {[false, true].map((rev) => (
-            <Marquee key={String(rev)} reverse={rev} duration={80} className="[&>div]:items-stretch">
-              {(rev ? [...testimonials].reverse() : testimonials).map((t) => (
-                <figure key={t.who} className="flex w-[21rem] shrink-0 flex-col justify-between rounded-[var(--radius)] border bg-card p-6 md:w-[26rem]">
-                  <div>
-                    <Quote className="size-5 text-accent" />
-                    <blockquote className="mt-4 space-y-3 text-[0.95rem] leading-relaxed">{t.q.map((q) => <p key={q}>{q}</p>)}</blockquote>
-                  </div>
-                  <figcaption className="mt-6 border-t pt-4 text-sm">
-                    <span className="block font-semibold">— {t.who}</span>
-                    {t.where ? <span className="mt-0.5 block text-muted-foreground">{t.where}</span> : null}
-                  </figcaption>
-                </figure>
-              ))}
+            <Marquee key={String(rev)} reverse={rev} duration={60} className="[&>div]:items-start">
+              {(rev ? [...testimonials].reverse() : testimonials).map((t) => <TestimonialCard key={t.who} t={t} />)}
             </Marquee>
           ))}
         </div>
