@@ -44,9 +44,10 @@
   --color-ring: var(--ring);
   --color-graphite: var(--graphite);
   --color-graphite-2: var(--graphite-2);
-  --font-display: "Bodoni Moda", "Didot", Georgia, serif;
-  --font-sans: "Schibsted Grotesk", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-display: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-serif: "Instrument Serif", Georgia, serif;
+  --font-mono: "Plus Jakarta Sans", system-ui, sans-serif;
   --radius-xl2: calc(var(--radius) + 0.5rem);
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --animate-marquee: marquee var(--duration, 40s) linear infinite;
@@ -79,16 +80,29 @@
 
 @utility font-display-tight {
   font-family: var(--font-display);
-  font-optical-sizing: auto;
-  letter-spacing: -0.035em;
-  line-height: 0.95;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+}
+
+/* Accent words in headings switch to the serif italic: classic against the clean sans */
+@layer base {
+  .font-display-tight em, .font-display-tight .italic {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: -0.01em;
+  }
+  h1, h2, h3 { text-wrap: balance; }
+  p { text-wrap: pretty; }
 }
 
 /* Small mono label used throughout like a drawing annotation */
 @utility label-mono {
-  font-family: var(--font-mono);
+  font-family: var(--font-sans);
   font-size: 0.7rem;
-  letter-spacing: 0.08em;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 

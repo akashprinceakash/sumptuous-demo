@@ -5,8 +5,8 @@ import { motion, useScroll, useSpring } from "motion/react";
 
 export type TimelineItem = {
   title: string;
-  description: string;
-  date: string;
+  description?: string;
+  date?: string;
   image?: string;
 };
 
@@ -15,7 +15,7 @@ export type TimelineItem = {
  * pinned while its row scrolls past, and the rule beside it fills with
  * scroll progress. Only transforms animate, so it stays on the compositor.
  */
-export default function Timeline({ items }: { items: TimelineItem[] }) {
+export default function Timeline({ items, itemAs: ItemTag = "h3" }: { items: TimelineItem[]; itemAs?: "h3" | "p" }) {
   const ref = React.useRef<HTMLOListElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 75%", "end 75%"] });
   const fill = useSpring(scrollYProgress, { stiffness: 260, damping: 50 });
@@ -31,8 +31,9 @@ export default function Timeline({ items }: { items: TimelineItem[] }) {
         <li key={item.title} className="relative grid border-b border-border last:border-b-0 md:grid-cols-[13.5rem_1fr] lg:grid-cols-[15.5rem_1fr]">
           <div className="pl-12 pr-6 pt-10 md:pl-10 md:pt-14 lg:pl-16">
             <div className="md:sticky md:top-28">
-              <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">{String(i + 1).padStart(2, "0")}</span>
-              <p className="mt-2 text-3xl font-medium tracking-tight text-foreground md:text-4xl">{item.date}</p>
+              {/* with no date the step number itself is the marker */}
+              {item.date ? <span className="label-mono text-muted-foreground">{String(i + 1).padStart(2, "0")}</span> : null}
+              <p className="mt-2 text-3xl font-medium tracking-tight text-foreground md:text-4xl">{item.date || String(i + 1).padStart(2, "0")}</p>
             </div>
           </div>
 
@@ -49,8 +50,8 @@ export default function Timeline({ items }: { items: TimelineItem[] }) {
             className="grid gap-6 px-6 pb-10 pl-12 pt-4 md:grid-cols-[1fr_1.1fr] md:items-start md:gap-10 md:px-10 md:py-14 lg:px-16"
           >
             <div className="max-w-md">
-              <h3 className="text-xl font-medium tracking-tight text-foreground md:text-2xl">{item.title}</h3>
-              <p className="mt-3 text-base leading-relaxed text-muted-foreground">{item.description}</p>
+              <ItemTag className="text-xl font-medium leading-snug tracking-tight text-foreground md:text-2xl">{item.title}</ItemTag>
+              {item.description ? <p className="mt-3 text-base leading-relaxed text-muted-foreground">{item.description}</p> : null}
             </div>
             {item.image ? (
               <div className="overflow-hidden rounded-xl border border-border bg-muted">

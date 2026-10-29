@@ -8,12 +8,14 @@ export function Container({ className, children }: { className?: string; childre
 }
 
 /** "(03) Process": the numbered annotation that opens every section. */
-export function SectionLabel({ n, children, className }: { n?: string; children: React.ReactNode; className?: string }) {
+/** `as` sets the tag where the live page uses a heading for the same label (e.g. "Recent Posts" is an H2). */
+export function SectionLabel({ n, children, className, as: T = "p" }: { n?: string; children: React.ReactNode; className?: string; as?: "p" | "h1" | "h2" | "h3" }) {
   return (
-    <p className={cn("label-mono flex items-center gap-3 text-muted-foreground", className)}>
-      {n ? <span className="text-accent">({n})</span> : null}
-      <span>{children}</span>
-    </p>
+    // the "(01)" counter sits outside the tag so a heading's text is exactly the live wording
+    <div className={cn("label-mono flex items-center gap-3 text-muted-foreground", className)}>
+      {n ? <span aria-hidden className="text-accent">({n})</span> : null}
+      <T className="m-0 text-[length:inherit] font-normal">{children}</T>
+    </div>
   );
 }
 
@@ -44,9 +46,9 @@ export function Logo({ className, light }: { className?: string; light?: boolean
         </linearGradient>
       </defs>
       <ellipse cx="27" cy="27" rx="22" ry="16.5" transform="rotate(-26 27 27)" fill="none" stroke="url(#sbs-ring)" strokeWidth="4.6" />
-      <text x="15" y="40" fill="currentColor" style={{ font: "italic 400 40px 'Bodoni Moda', serif" }}>S</text>
-      <text x="43" y="37" fill="currentColor" style={{ font: "italic 400 30px 'Bodoni Moda', serif" }}>umptuous</text>
-      <text x="104" y="52" fill="currentColor" opacity=".75" style={{ font: "500 6.4px 'JetBrains Mono', monospace", letterSpacing: "2px" }}>BUILDING SYSTEMS</text>
+      <text x="15" y="40" fill="currentColor" style={{ font: "italic 400 42px 'Instrument Serif', serif" }}>S</text>
+      <text x="43" y="37" fill="currentColor" style={{ font: "italic 400 32px 'Instrument Serif', serif" }}>umptuous</text>
+      <text x="104" y="52" fill="currentColor" opacity=".75" style={{ font: "600 6.2px 'Plus Jakarta Sans', sans-serif", letterSpacing: "2.2px" }}>BUILDING SYSTEMS</text>
     </svg>
   );
 }

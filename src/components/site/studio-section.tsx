@@ -10,12 +10,12 @@ const ease = [0.16, 1, 0.3, 1] as const;
 
 /** Circular text badge that turns slowly (CSS, compositor only). */
 function Seal() {
-  const text = "EUROPE · TO · INDIA · SINCE · 25+ · YEARS · ";
+  const text = "THE ART OF BUILT EXCELLENCE · ";
   return (
     <div className="relative grid size-32 place-items-center rounded-full bg-accent text-background shadow-xl md:size-36">
       <svg viewBox="0 0 100 100" className="absolute inset-0 size-full animate-[spin_22s_linear_infinite]">
         <defs><path id="seal-circle" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" /></defs>
-        <text style={{ font: "500 7px 'JetBrains Mono', monospace", letterSpacing: "0.8px" }} fill="currentColor">
+        <text style={{ font: "600 7.4px 'Plus Jakarta Sans', sans-serif", letterSpacing: "2.6px" }} fill="currentColor">
           <textPath href="#seal-circle">{text}</textPath>
         </text>
       </svg>
@@ -24,11 +24,13 @@ function Seal() {
   );
 }
 
+// Figures and labels from the live site: "25+ years of experience", "over 500 projects completed
+// across India", the eleven "Global Partner Brands" and the twelve "Branches" under Our Presence.
 const stats = [
-  { n: 25, s: "+", l: "Years of expertise", d: "In façade & fenestration since the beginning." },
-  { n: 500, s: "+", l: "Projects delivered", d: "Villas, towers, campuses and heritage homes." },
-  { n: 10, s: "", l: "Partner brands", d: "Spain, Italy, Belgium and Australia." },
-  { n: 13, s: "", l: "Cities served", d: "From Bengaluru to Delhi and Mumbai." },
+  { n: 25, s: "+", l: "Years of experience" },
+  { n: 500, s: "+", l: "Projects completed across India" },
+  { n: 11, s: "", l: "Global partner brands" },
+  { n: 12, s: "", l: "Branches" },
 ];
 
 export function StudioSection() {
@@ -40,9 +42,12 @@ export function StudioSection() {
     <section className="relative py-20 md:py-28">
       <Container>
         <div className="mb-10 flex flex-wrap items-center justify-between gap-4 md:mb-14">
-          <SectionLabel n="01">The studio</SectionLabel>
-          <p className="label-mono text-muted-foreground">Bengaluru · Est. 25+ years ago</p>
+          <SectionLabel n="01" as="h2">Sumptuous Building Systems</SectionLabel>
+          <p className="label-mono text-muted-foreground">Head Office · Bangalore</p>
         </div>
+        <p className="mb-12 max-w-4xl text-xl font-medium leading-snug tracking-tight md:mb-16 md:text-3xl">
+          With 25+ years of experience and over 500 projects completed across India, our team of experts has established itself as a leader in the Façade &amp; Fenestration industry. We've had the honor of working with prominent clients, famous architects, and architectural houses, delivering high-quality solutions that meet the highest industry standards.
+        </p>
 
         <div className="grid gap-10 md:grid-cols-12 md:gap-6">
           {/* spec-table stats */}
@@ -63,7 +68,6 @@ export function StudioSection() {
                   <span className="font-display-tight block text-5xl md:text-6xl">
                     <NumberTicker value={s.n} /><span className="text-accent">{s.s}</span>
                   </span>
-                  <span className="mt-2 block text-sm text-muted-foreground">{s.d}</span>
                 </dd>
               </motion.div>
             ))}
@@ -74,15 +78,15 @@ export function StudioSection() {
             <div ref={imgRef} className="relative aspect-[4/5] overflow-hidden rounded-[var(--radius)] bg-muted">
               <motion.img
                 src={img("u-architect-drawing")}
-                alt="Specification drawings being marked up by hand"
+                alt="Architectural drawings being marked up by hand"
                 loading="lazy"
                 decoding="async"
                 style={{ y: imgY }}
                 className="absolute inset-x-0 -top-[6%] h-[112%] w-full object-cover will-change-transform"
               />
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-graphite/80 to-transparent p-5 pt-16 text-background">
-                <p className="label-mono text-accent-bright">Specified by hand</p>
-                <p className="mt-1 text-sm text-background/80">Every opening drawn, checked and matched to its system.</p>
+                <p className="label-mono text-accent-bright">Crafted to perfection</p>
+                <p className="mt-1 text-lg font-medium tracking-tight text-background">The Art of Built Excellence</p>
               </div>
             </div>
             <Link to="/about" aria-label="Read our story" className="absolute -left-4 bottom-24 transition-transform duration-500 hover:scale-105 md:-left-16">

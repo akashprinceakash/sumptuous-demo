@@ -34,10 +34,10 @@ export function StickyScrollReveal({ items }: { items: StickyItem[] }) {
             )}
           >
             <span className="label-mono text-accent">{it.eyebrow}</span>
-            <h3 className="font-display-tight mt-4 text-4xl md:text-6xl">{it.title}</h3>
+            <p className="font-display-tight mt-4 text-4xl md:text-6xl">{it.title}</p>
             <p className="mt-6 max-w-md text-muted-foreground">{it.body}</p>
             <Link to={it.to} className="group mt-8 inline-flex w-fit items-center gap-2 text-sm font-medium">
-              <span className="border-b border-current pb-0.5">Explore system</span>
+              <span className="border-b border-current pb-0.5">Know More</span>
               <ArrowUpRight className="size-4 transition-transform group-hover:rotate-45" />
             </Link>
             <img src={it.img} alt="" className="mt-8 aspect-[4/3] w-full rounded-2xl object-cover md:hidden" loading="lazy" />

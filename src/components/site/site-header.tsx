@@ -52,7 +52,7 @@ export function SiteHeader() {
 
           <nav aria-label="Primary" className="mx-auto hidden lg:block">
             <ul className="flex items-center gap-0.5">
-              {nav.slice(1).map((n) =>
+              {nav.map((n) =>
                 n.to === "/products" ? (
                   <li key={n.to} onMouseEnter={openPanel} onMouseLeave={closePanel}>
                     <NavLink
@@ -69,6 +69,7 @@ export function SiteHeader() {
                   <li key={n.to}>
                     <NavLink
                       to={n.to}
+                      end
                       className={({ isActive }) => cn("block rounded-full px-3.5 py-2 text-sm transition-colors hover:bg-muted", isActive && "bg-graphite text-background hover:bg-graphite")}
                     >
                       {n.label}
@@ -84,7 +85,7 @@ export function SiteHeader() {
               <Phone className="size-4" />
             </a>
             <Link to="/contact" className="hidden h-10 items-center gap-1.5 rounded-full bg-accent px-4 text-sm font-medium text-background transition-colors hover:bg-graphite sm:inline-flex">
-              Enquire <ArrowUpRight className="size-4" />
+              REACH OUT <ArrowUpRight className="size-4" />
             </Link>
             <button type="button" onClick={() => setSheet(true)} aria-label="Open menu" aria-expanded={sheet} className="grid size-10 place-items-center rounded-full bg-graphite text-background lg:hidden">
               <Menu className="size-4" />
@@ -107,11 +108,11 @@ export function SiteHeader() {
               <div className="grid grid-cols-[1fr_3fr] gap-2">
                 <div className="flex flex-col justify-between rounded-[1.4rem] bg-graphite p-6 text-background">
                   <div>
-                    <p className="label-mono text-accent-bright">Products · 12</p>
-                    <p className="font-display-tight mt-4 text-3xl">Every opening, <em>engineered.</em></p>
+                    <p className="label-mono text-accent-bright">Products</p>
+                    <p className="font-display-tight mt-4 text-2xl">High Performance Windows for <em>Sustainable</em> Habitats</p>
                   </div>
                   <Link to="/products" className="label-mono inline-flex items-center gap-2 text-accent-bright hover:text-background">
-                    View all <ArrowUpRight className="size-3.5" />
+                    View all products <ArrowUpRight className="size-3.5" />
                   </Link>
                 </div>
                 <ul className="grid grid-cols-3 gap-1">
@@ -122,7 +123,7 @@ export function SiteHeader() {
                           <img src={`/images/${p.img}.webp`} alt="" className="size-full object-cover transition-transform duration-700 group-hover:scale-110" />
                         </span>
                         <span className="min-w-0">
-                          <span className="block truncate text-sm font-medium">{p.short}</span>
+                          <span className="block text-sm font-medium leading-snug">{p.name}</span>
                           <span className="label-mono block truncate text-[0.6rem] text-muted-foreground">{p.partner}</span>
                         </span>
                       </Link>
@@ -154,7 +155,7 @@ export function SiteHeader() {
             <nav aria-label="Mobile" className="flex flex-1 flex-col justify-center px-5">
               {nav.map((n, i) => (
                 <motion.div key={n.to} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 + i * 0.05, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
-                  <NavLink to={n.to} className={({ isActive }) => cn("flex items-baseline gap-4 border-b border-background/10 py-3 font-display text-4xl", isActive && "italic text-accent-bright")}>
+                  <NavLink to={n.to} className={({ isActive }) => cn("flex items-baseline gap-4 border-b border-background/10 py-3 font-display-tight text-4xl", isActive && "italic text-accent-bright")}>
                     <span className="label-mono text-background/40">{String(i + 1).padStart(2, "0")}</span>
                     {n.label}
                   </NavLink>

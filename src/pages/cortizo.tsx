@@ -1,109 +1,177 @@
+import { Link } from "react-router-dom";
 import { motion } from "motion/react";
-import { ArrowUpRight, BadgeCheck, DoorOpen, Fence, LayoutGrid, Palette, PanelsTopLeft, Settings2, Sun, Columns3 } from "lucide-react";
+import { ArrowUpRight, BadgeCheck, Building, Building2, Check, DoorOpen, Hotel, Columns3, LayoutPanelTop, PanelsTopLeft, Home as HomeIcon } from "lucide-react";
 import { TextReveal } from "@/components/ui/text-reveal";
 import { FadeIn } from "@/components/ui/fade-in";
-import { NumberTicker } from "@/components/ui/number-ticker";
 import { SpotlightCard } from "@/components/ui/spotlight-card";
 import { ParallaxImage } from "@/components/ui/parallax-image";
 import { ArrowButton } from "@/components/ui/arrow-button";
 import { Container, Crumbs, SectionLabel } from "@/components/site/primitives";
-import { CtaBlock, PostCard, SectionHead } from "@/components/site/blocks";
-import { img, posts } from "@/data/site";
+import { CtaBlock, FaqBlock, PostCard, SectionHead } from "@/components/site/blocks";
+import { cortizoPages, img, posts } from "@/data/site";
 
-const range = [
-  { icon: PanelsTopLeft, t: "Hinged", d: "Casement windows and doors in thermal and non-thermal series." },
-  { icon: DoorOpen, t: "Doors", d: "Entrance and terrace doors with concealed hardware." },
-  { icon: Columns3, t: "Sliding", d: "Minimal, lift-and-slide and pocket sliding systems." },
-  { icon: LayoutGrid, t: "PVC", d: "High-insulation PVC windows for energy-led projects." },
-  { icon: Palette, t: "Finishes", d: "13 anodised colours and 110 finishes." },
-  { icon: Sun, t: "Sunscreen", d: "Louvres, brise-soleil and solar shading." },
-  { icon: Fence, t: "Handrail", d: "Glass and aluminium balustrade systems." },
-  { icon: Settings2, t: "Accessories", d: "Hardware, seals and smart operation." },
+// Wording from the live Cortizo page (sumptuousindia.com/cortizo-in-india).
+const features = [
+  { h: "Premium Cortizo Sliding Systems in India", p: "At Sumptuous Building Systems, we deliver advanced Cortizo in India solutions designed for modern homes, luxury villas, and commercial projects. Cortizo sliding systems are known for their sleek European design, smooth functionality, and superior thermal insulation, making them ideal for large panoramic openings and contemporary architecture.", img: "u-villa-sliding" },
+  { h: "High-Performance Cortizo Aluminium Windows", p: "Our premium range of Cortizo in India aluminium windows combines aesthetics with durability for long-lasting performance. Designed with cutting-edge European engineering, these systems provide excellent sound insulation, weather resistance, and energy efficiency. Sumptuous Building Systems ensures every installation is tailored to enhance natural light, ventilation, and modern architectural appeal.", img: "v-glass-living" },
+  { h: "Elegant Cortizo Aluminium Doors for Modern Spaces", p: "Enhance your residential or commercial space with premium Cortizo in India aluminium doors designed for durability, advanced security, and effortless functionality. From sliding doors to slimline panoramic systems, Cortizo products are engineered to create luxurious and spacious interiors while maintaining exceptional structural performance. These systems are an excellent choice for luxury architectural developments and contemporary construction projects throughout India.", img: "v-open-deck" },
+  { h: "Slim Line Aluminium Windows in India", p: "Slim line aluminium windows in India are an ideal choice for modern homes and luxury spaces, offering a sleek design, larger glass views, and maximum natural light. Known for their durability, low maintenance, and contemporary appearance, these premium aluminium window systems enhance both aesthetics and performance while providing excellent strength, weather resistance, and energy efficiency for residential and commercial projects.", img: "v-steel-bedroom" },
 ];
 
-export default function Cortizo() {
+const whyCortizo = ["European engineering & quality", "Slim profiles & modern aesthetics", "Thermal insulation & energy efficiency", "High durability & corrosion resistance", "Ideal for luxury villas & premium apartments"];
+const applications = [
+  { icon: HomeIcon, t: "Luxury Villas" },
+  { icon: Building2, t: "High-rise Apartments" },
+  { icon: Building, t: "Commercial Buildings" },
+  { icon: Hotel, t: "Resorts & Hotels" },
+];
+const systems = [
+  { icon: Columns3, t: "Cortizo Sliding Doors" },
+  { icon: PanelsTopLeft, t: "Cortizo Casement Windows" },
+  { icon: DoorOpen, t: "Cortizo Lift & Slide Systems" },
+  { icon: LayoutPanelTop, t: "Cortizo Facade Systems" },
+];
+const whySumptuous = ["Authorized supplier network", "Expert installation", "Custom design solutions", "Pan India service"];
+
+/** `variant="1"` renders /cortizo-in-india-1, the older copy the live site keeps indexed with its own headings. */
+export default function Cortizo({ variant }: { variant?: "1" }) {
   return (
     <>
       <section className="bg-drafting relative pb-10 pt-32 md:pt-40">
         <Container className="text-center">
           <Crumbs items={[["Home", "/"], ["Cortizo"]]} className="flex justify-center" />
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }} className="label-mono mt-10 inline-flex items-center gap-2 rounded-full bg-accent-soft px-3 py-1.5 text-accent">
-            <BadgeCheck className="size-3.5" /> Authorised Cortizo partner in India
+            <BadgeCheck className="size-3.5" /> Certified Cortizo Fabricator
           </motion.p>
-          <TextReveal as="h1" text="Cortizo. Engineered in Spain, installed in India." accent={["Spain,"]} className="mx-auto mt-6 max-w-5xl text-4xl md:text-6xl" />
-          <FadeIn delay={0.5} className="mx-auto mt-8 max-w-xl text-lg text-muted-foreground">
-            A global leader in façade and fenestration, headquartered in Padrón, Spain, with a Technology Centre certified by PfB Rosenheim, Germany.
+          {variant === "1" ? <h2 className="label-mono mt-6 font-normal text-muted-foreground">CORTIZO IN INDIA</h2> : null}
+          <TextReveal as="h1" text={variant === "1" ? "CORTIZO IN INDIA" : "Cortizo in India"} accent={["India", "INDIA"]} className="mx-auto mt-6 max-w-4xl text-4xl md:text-7xl" />
+          <FadeIn delay={0.4} className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
+            Cortizo is a premium European aluminium system brand known for high-performance windows, sliding doors, and facade systems. At Sumptuous India, we bring Cortizo aluminium solutions to India, offering world-class design, durability, and energy efficiency for residential and commercial spaces.
           </FadeIn>
-          <FadeIn delay={0.6} className="mt-10 flex flex-wrap justify-center gap-2">
-            <ArrowButton to="/contact">Request a Cortizo quote</ArrowButton>
-            <ArrowButton href="https://www.ventanascortizo.com/en/" variant="light" className="border">Cortizo catalogue</ArrowButton>
+          <FadeIn delay={0.5} className="mt-10 flex flex-wrap justify-center gap-2">
+            <ArrowButton to="/contact">Contact Us</ArrowButton>
           </FadeIn>
         </Container>
-        <Container className="relative mt-16">
+        <Container className="relative mt-14">
           <ParallaxImage src={img("v-white-villa")} alt="Minimal white villa with large aluminium glazing" className="h-[56svh] rounded-[2rem]" strength={6} priority />
-          {[["150+", "systems", "left-14 top-6"], ["PfB", "Rosenheim certified", "right-14 bottom-6"]].map(([a, b, pos]) => (
-            <motion.div key={a} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.8 }} className={`absolute hidden rounded-2xl bg-background/90 px-5 py-4 backdrop-blur md:block ${pos}`}>
-              <p className="font-display-tight text-4xl">{a}</p>
-              <p className="label-mono text-muted-foreground">{b}</p>
-            </motion.div>
-          ))}
         </Container>
       </section>
 
       <section className="py-20 md:py-28">
         <Container>
-          <div className="grid divide-y border-y md:grid-cols-4 md:divide-x md:divide-y-0">
-            {([[150, "+", "Systems"], [9, "", "Manufacturing plants"], [13, "", "Anodised colours"], [110, "", "Finishes"]] as const).map(([n, s, l]) => (
-              <div key={l} className="px-2 py-8 md:px-8 md:py-12">
-                <p className="font-display-tight text-7xl md:text-8xl"><NumberTicker value={n} /><span className="text-accent">{s}</span></p>
-                <p className="label-mono mt-3 text-muted-foreground">{l}</p>
+          <SectionHead n="01" label="Cortizo in India" title={variant === "1" ? "Premium Cortizo Aluminium Systems in India For Luxury Modern Architecture" : "Premium Cortizo Aluminium Systems in India for Luxury Modern Architecture"} accent={["Luxury"]} />
+          <div className="space-y-16 md:space-y-24">
+            {features.map((f, i) => (
+              <div key={f.h} className="grid items-center gap-8 md:grid-cols-12 md:gap-12">
+                <ParallaxImage src={img(f.img)} alt="" className={`aspect-[4/3] rounded-[var(--radius)] md:col-span-6 ${i % 2 ? "md:order-2" : ""}`} strength={5} />
+                <FadeIn className="md:col-span-6">
+                  <span className="label-mono text-accent">0{i + 1}</span>
+                  {variant === "1"
+                    ? <h2 className="mt-3 text-2xl font-semibold tracking-tight md:text-3xl">{f.h}</h2>
+                    : <h3 className="mt-3 text-2xl font-semibold tracking-tight md:text-3xl">{f.h}</h3>}
+                  <p className="mt-4 text-base leading-relaxed text-muted-foreground">{f.p}</p>
+                </FadeIn>
               </div>
             ))}
           </div>
         </Container>
       </section>
 
+      <section className="border-y bg-card py-20 md:py-28">
+        <Container className="grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <SectionLabel n="02" as="h2">Why Choose Cortizo in India</SectionLabel>
+            <ul className="mt-6 divide-y border-y">
+              {whyCortizo.map((w) => (
+                <li key={w} className="flex items-center gap-4 py-4 text-base font-medium">
+                  <span className="grid size-7 shrink-0 place-items-center rounded-full bg-accent-soft text-accent"><Check className="size-3.5" /></span>{w}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="space-y-10 lg:col-span-6 lg:col-start-7">
+            <div>
+              <SectionLabel n="03" as="h2">Applications:</SectionLabel>
+              <div className="mt-6 grid grid-cols-2 gap-2">
+                {applications.map(({ icon: Icon, t }) => (
+                  <SpotlightCard key={t} className="flex items-center gap-3 p-5"><Icon className="size-5 shrink-0 text-accent" strokeWidth={1.4} /><span className="font-medium">{t}</span></SpotlightCard>
+                ))}
+              </div>
+            </div>
+            <div>
+              <SectionLabel n="04" as="h2">Cortizo Systems We Offer</SectionLabel>
+              <div className="mt-6 grid grid-cols-2 gap-2">
+                {systems.map(({ icon: Icon, t }) => (
+                  <SpotlightCard key={t} className="flex items-center gap-3 p-5"><Icon className="size-5 shrink-0 text-accent" strokeWidth={1.4} /><span className="font-medium">{t}</span></SpotlightCard>
+                ))}
+              </div>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-20 md:py-28">
+        <Container>
+          <div className="grid overflow-hidden rounded-[2rem] bg-graphite text-background lg:grid-cols-2">
+            <div className="flex flex-col justify-between gap-12 p-8 md:p-14">
+              <div>
+                <BadgeCheck className="size-6 text-accent-bright" />
+                <TextReveal as="h3" text="Certified Cortizo Fabricator" accent={["Fabricator"]} className="mt-4 text-4xl md:text-5xl [&_.text-accent]:text-accent-bright" />
+                <div className="mt-6 space-y-4 text-background/70">
+                  <p>Sumptuous Building Systems is officially certified by Cortizo as an authorized fabricator for premium aluminium windows, doors, and façade systems. Our certification reflects a commitment to international quality standards, precision engineering, and modern architectural excellence. We deliver innovative aluminium solutions designed for durability, aesthetics, and long-term performance.</p>
+                  <p>With advanced fabrication expertise and trusted Cortizo systems, we provide customized solutions for residential, commercial, and large-scale architectural projects across India. Our focus on quality craftsmanship, contemporary design, and customer satisfaction helps us create spaces that combine elegance, strength, and functionality.</p>
+                </div>
+              </div>
+              <div>
+                <h2 className="label-mono font-normal text-background/50">Why Choose Sumptuous India</h2>
+                <ul className="mt-4 grid grid-cols-2 gap-2">
+                  {whySumptuous.map((w) => <li key={w} className="rounded-xl border border-background/15 px-4 py-3 text-sm">{w}</li>)}
+                </ul>
+              </div>
+            </div>
+            <ParallaxImage src={img("v-white-tower")} alt="Facade with deep-set aluminium windows" className="min-h-[50svh]" />
+          </div>
+        </Container>
+      </section>
+
       <section className="pb-20 md:pb-28">
         <Container>
-          <SectionHead n="01" label="The range" title="Choose your system." accent={["system."]} aside={<p className="max-w-xs">Cortizo's anodising range is unparalleled. Every series below is available in our Bengaluru sample room.</p>} />
-          <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
-            {range.map(({ icon: Icon, t, d }, i) => (
-              <FadeIn key={t} delay={(i % 4) * 0.06}>
-                <SpotlightCard className="group h-full p-6 md:p-8">
-                  <Icon className="size-8 text-accent" strokeWidth={1.2} />
-                  <h3 className="font-display-tight mt-16 text-3xl md:text-4xl">{t}</h3>
-                  <p className="mt-3 text-sm text-muted-foreground">{d}</p>
-                  <ArrowUpRight className="absolute right-6 top-6 size-5 opacity-0 transition-all duration-500 group-hover:rotate-45 group-hover:opacity-100" />
-                </SpotlightCard>
+          <div className="mb-12 max-w-3xl">
+            <SectionLabel n="05">Cortizo Windows Supplier</SectionLabel>
+            <h2 className="mt-4 text-2xl font-semibold tracking-tight md:text-4xl">Premium Cortizo Windows Supplier in India for Modern Luxury Spaces</h2>
+            <div className="mt-5 space-y-4 text-base leading-relaxed text-muted-foreground md:text-lg">
+              <p>Looking for a trusted Cortizo windows supplier in India for your residential or commercial project? Cortizo offers premium aluminium window systems designed for modern architecture, luxury villas, and high-end spaces. Known for sleek designs, durability, thermal insulation, and superior performance, Cortizo windows combine aesthetics with functionality.</p>
+              <p>Choosing the right Cortizo windows supplier in India ensures access to genuine aluminium systems, expert guidance, and customized solutions for sliding windows, minimal windows, and contemporary façades. Cortizo systems are ideal for creating elegant, energy-efficient, and long-lasting spaces with a modern architectural appeal.</p>
+            </div>
+          </div>
+          <div className="grid gap-8 md:grid-cols-3">
+            {posts.filter((p) => /cortizo/i.test(p.title)).slice(0, 3).map((p, i) => <FadeIn key={p.slug} delay={i * 0.08}><PostCard p={p} /></FadeIn>)}
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-t py-20 md:py-28">
+        <Container>
+          {variant === "1" ? <h2 className="mb-8 text-2xl font-semibold tracking-tight md:text-4xl">Explore Our Premium Cortizo Aluminium Systems</h2> : null}
+          <div className="grid gap-2 sm:grid-cols-2">
+            {cortizoPages.map((c, i) => (
+              <FadeIn key={c.slug} delay={i * 0.06}>
+                <Link to={`/${c.slug}`} className="group relative flex min-h-72 flex-col justify-end overflow-hidden rounded-[var(--radius)] bg-graphite p-6 text-background md:min-h-80">
+                  <img src={img(c.img)} alt="" loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover opacity-55 transition-all duration-[1.2s] ease-out-expo group-hover:scale-105 group-hover:opacity-70" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-graphite via-graphite/30 to-transparent" />
+                  <div className="relative">
+                    <h2 className="max-w-md text-xl font-semibold leading-snug tracking-tight md:text-2xl">{variant === "1" ? c.altTitle : c.title}</h2>
+                    <span className="label-mono mt-5 inline-flex items-center gap-2 text-accent-bright">View More <ArrowUpRight className="size-3.5 transition-transform group-hover:rotate-45" /></span>
+                  </div>
+                </Link>
               </FadeIn>
             ))}
           </div>
         </Container>
       </section>
 
-      <section className="px-2 md:px-3">
-        <div className="grid overflow-hidden rounded-[2rem] bg-graphite text-background lg:grid-cols-2">
-          <div className="flex flex-col justify-between gap-16 p-8 md:p-16">
-            <SectionLabel n="02" className="text-background/60">Technology centre</SectionLabel>
-            <div>
-              <TextReveal text="Tested in Spain. Certified in Germany." accent={["Certified"]} className="text-5xl md:text-7xl [&_.text-accent]:text-accent-bright" />
-              <p className="mt-8 max-w-md text-background/65">Every Cortizo system is validated for air, water and wind performance in a state-of-the-art Technology Centre certified by PfB Rosenheim, so performance on paper is performance on site.</p>
-            </div>
-          </div>
-          <ParallaxImage src={img("v-white-tower")} alt="Facade with deep-set aluminium windows" className="min-h-[50svh]" />
-        </div>
-      </section>
-
-      <section className="py-20 md:py-28">
-        <Container>
-          <SectionHead n="03" label="Cortizo journal" title="Questions architects ask us." accent={["ask"]} />
-          <div className="grid gap-8 md:grid-cols-3">
-            {posts.filter((p) => p.cat === "Cortizo").slice(0, 3).map((p, i) => <FadeIn key={p.slug} delay={i * 0.08}><PostCard p={p} /></FadeIn>)}
-          </div>
-        </Container>
-      </section>
-
-      <CtaBlock title="Specify Cortizo with confidence." accent={["confidence."]} />
+      <FaqBlock slug="cortizo-in-india" className="border-t" />
+      <CtaBlock />
     </>
   );
 }

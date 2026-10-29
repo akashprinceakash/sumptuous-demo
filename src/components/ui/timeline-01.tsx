@@ -36,6 +36,10 @@ type TimelineBlockProps = {
   badge?: string;
   title?: string;
   description?: string;
+  /** Tags for the badge, title and item titles, so the block can follow a page's heading outline. */
+  badgeAs?: "span" | "h2";
+  titleAs?: "h2" | "p";
+  itemAs?: "h3" | "p";
 };
 
 const TimelineBlock01 = ({
@@ -43,6 +47,9 @@ const TimelineBlock01 = ({
   badge = "Timeline",
   title = "A Story Of Growth",
   description = "Our journey reflects years of collaboration, creativity, and dedication to helping brands stand out online.",
+  badgeAs: BadgeTag = "span",
+  titleAs: TitleTag = "h2",
+  itemAs = "h3",
 }: TimelineBlockProps) => {
   return (
     <section className="overflow-hidden">
@@ -53,12 +60,12 @@ const TimelineBlock01 = ({
               variant="outline"
               className="rounded-full px-3 py-1 font-normal"
             >
-              {badge}
+              <BadgeTag className="m-0 text-xs font-normal">{badge}</BadgeTag>
             </Badge>
             <div className="space-y-3">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight text-foreground">
+              <TitleTag className="text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight text-foreground">
                 {title}
-              </h2>
+              </TitleTag>
               <p className="md:text-lg text-base text-muted-foreground leading-relaxed">
                 {description}
               </p>
@@ -66,7 +73,7 @@ const TimelineBlock01 = ({
           </div>
         </div>
         <div className="md:border-x border-r border-border">
-          <Timeline items={items} />
+          <Timeline items={items} itemAs={itemAs} />
         </div>
         <div className="border-x border-t border-border h-18 md:h-28" />
       </div>
